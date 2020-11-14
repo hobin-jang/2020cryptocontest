@@ -122,6 +122,7 @@ def AddRoundKey(state, key):
 
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
  # correlation값 구하는 식 (논문에 있는 거 참고)
 def corr(W,H):  
@@ -145,8 +146,6 @@ cipher=[[0] for i in range(1025)] #cipher : encrypted파일 16byte 씩 블록 �
 for i in range(1025):
     cipher[i]=f[16*i:16*(i+1)]
 
-
-import pandas as pd
 
 power=[[] for i in range(1025)]
 
@@ -180,9 +179,9 @@ for i in range(1025):
     cipher2[i]=[x,y,z,w]
     cipher2[i]=InvMixColumns([cipher2[i]])[0] #mixcolumn 먼저 하고 addround 하기 위해
 
-l=10999 #7,8라운드 전력이 20000포인트라 8라운드 전력 그냥 널널하게 10999개로 잡은 것
+L=10999 #7,8라운드 전력이 20000포인트라 8라운드 전력 그냥 널널하게 10999개로 잡은 것
 
-co=[([0]*l) for i in range(256)]
+correlation=[([0]*L) for i in range(256)]
 
 for k in range(256):  #k값 0~255까지 다 조사, k: mix(9라운드 key) 한 것의 첫번째 값
     ex=[0]*1025
@@ -191,13 +190,13 @@ for k in range(256):  #k값 0~255까지 다 조사, k: mix(9라운드 key) 한 �
         ex[s]=cipher2[s][0]^k   #0대신 1,2,3 넣어서 9라운드 첫번째 열 2,3,4번째 키 구함
         re[s]=HW[isbox[ex[s]]]  #HW: 해밍웨이트 값 테이블
            
-    for t in range(l):
-        co[k][t]=corr(power[:,t],re)
+    for t in range(L):
+        correlation[k][t]=corr(power[:,t],re)
         
     if k%100==0:
         print(k) # 그냥 체크하려고 넣은 거
 
-plt.plot(co)  # 툭 튀어 나온 값이 mix(key)의 첫번째 값
+plt.plot(correlation)  # 툭 튀어 나온 값이 mix(key)의 첫번째 값
 
 
 
