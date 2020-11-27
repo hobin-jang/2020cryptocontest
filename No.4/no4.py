@@ -137,7 +137,7 @@ def corr(W,H):
     return (N*sum_WH-sum(W)*sum(H))/(((N*sum(g**2)-(sum(W))**2)**0.5)*((N*sum(h**2)-sum(H)**2)**0.5))
     
 
-f1=open('C:/Users/ghqls/.spyder-py3/exam.hwp.encrypted','rb') # encrypted파일 바이트로 읽기
+f1=open('exam.hwp.encrypted','rb') # encrypted파일 바이트로 읽기
 f=f1.read()
 f1.close()
 
@@ -149,7 +149,7 @@ for i in range(1025):
 
 power=[[] for i in range(1025)]
 
-f2=pd.read_csv(r"C:/Users/ghqls/.spyder-py3/PowerConsumption.csv")  # 전력 불러오기
+f2=pd.read_csv(r"PowerConsumption.csv")  # 전력 불러오기
 
 for i in range(1025):
         power[i]=f2.iloc[9000:,i]  #전력 포인트 2만개 중 9천번째부터
